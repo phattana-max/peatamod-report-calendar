@@ -29,8 +29,7 @@
                             700: '#701c82',
                             800: '#5a1969',
                             900: '#4a1755',
-                            gold: '#fbbf24',
-                            accent: '#f59e0b'
+                            gold: '#fbbf24'
                         }
                     }
                 }
@@ -56,13 +55,6 @@
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
-        }
-        .animate-pulse-subtle {
-            animation: pulse-subtle 2s infinite;
-        }
-        @keyframes pulse-subtle {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.95; transform: scale(0.995); }
         }
     </style>
 </head>
@@ -110,7 +102,7 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
 
         <!-- Top Alert / Due Summary Banner -->
-        <div id="urgentAlertBox" class="hidden mb-6 bg-gradient-to-r from-amber-500 to-rose-600 text-white p-4 rounded-2xl shadow-md flex items-center justify-between animate-pulse-subtle">
+        <div id="urgentAlertBox" class="hidden mb-6 bg-gradient-to-r from-amber-500 to-rose-600 text-white p-4 rounded-2xl shadow-md flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="p-2.5 bg-white/20 rounded-xl">
                     <i class="fa-solid fa-triangle-exclamation text-xl text-amber-100"></i>
@@ -189,7 +181,7 @@
             </div>
         </div>
 
-        <!-- LIST TABLE VIEW CONTAINER (Hidden by default) -->
+        <!-- LIST TABLE VIEW CONTAINER -->
         <div id="listViewContainer" class="hidden bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
             <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                 <h3 class="font-bold text-slate-700 text-sm flex items-center gap-2">
@@ -225,18 +217,18 @@
                 <span class="font-semibold text-pea-800">กฟส.ตะโหมด</span> — ระบบบริหารจัดการลิงก์รายงานประจำเดือน
             </div>
             <div class="flex items-center gap-3">
-                <button onclick="resetToDemoData()" class="text-slate-400 hover:text-rose-600 underline text-xs">
-                    ล้างข้อมูลทดสอบทั้งหมด
+                <button onclick="clearAllData()" class="text-slate-400 hover:text-rose-600 underline text-xs">
+                    ล้างข้อมูลค้างในระบบทั้งหมด
                 </button>
             </div>
         </div>
     </footer>
 
-    <!-- MODAL: Persistent Alarm Popup (สำหรับเตือน 5 นาที) -->
+    <!-- MODAL: Alarm Popup -->
     <div id="alarmPopupModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 text-center border-4 border-amber-400 transform transition-all animate-bounce-subtle">
-            <div class="w-20 h-20 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner animate-pulse">
-                <i class="fa-solid fa-bell-ring"></i>
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 text-center border-4 border-amber-400">
+            <div class="w-20 h-20 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner">
+                <i class="fa-solid fa-bell"></i>
             </div>
             <span class="px-3 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full uppercase tracking-wider mb-2 inline-block">
                 ⚡ แจ้งเตือนส่งรายงานวันนี้!
@@ -261,7 +253,7 @@
 
     <!-- MODAL: Add / Edit Report Link -->
     <div id="reportModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-100 transform transition-all">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-100">
             <div class="bg-gradient-to-r from-pea-800 to-pea-700 px-6 py-4 text-white flex justify-between items-center">
                 <h3 id="modalTitle" class="font-bold text-base flex items-center gap-2">
                     <i class="fa-solid fa-circle-plus"></i> เพิ่มรายการลิงก์รายงาน
@@ -311,7 +303,7 @@
         </div>
     </div>
 
-    <!-- MODAL: Day Details Modal (เมื่อคลิกที่วันบนปฏิทิน) -->
+    <!-- MODAL: Day Details Modal -->
     <div id="dayDetailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-100">
             <div class="bg-gradient-to-r from-pea-800 to-pea-700 px-6 py-4 text-white flex justify-between items-center">
@@ -354,4 +346,669 @@
             </div>
             <div class="p-6 space-y-4">
                 <form onsubmit="handleAddHoliday(event)" class="flex gap-2">
-                    <input type="date" id="holidayDateInput" required class="px-3 py-2 border border-slate-300 rounded-xl text-xs focus:ring-2
+                    <input type="date" id="holidayDateInput" required class="px-3 py-2 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-pea-600 focus:outline-none">
+                    <input type="text" id="holidayNameInput" placeholder="ชื่อวันหยุด..." required class="flex-1 px-3 py-2 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-pea-600 focus:outline-none">
+                    <button type="submit" class="px-3 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold transition">
+                        เพิ่ม
+                    </button>
+                </form>
+
+                <div class="border-t border-slate-100 pt-3">
+                    <h4 class="text-xs font-bold text-slate-600 mb-2">รายการวันหยุดเพิ่มเติม:</h4>
+                    <div id="holidayList" class="max-h-48 overflow-y-auto custom-scrollbar space-y-1.5 text-xs">
+                        <!-- Dynamic Holiday Items -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Legend Info Modal -->
+    <div id="legendModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                <h3 class="font-bold text-slate-800 text-sm">คำอธิบายสัญลักษณ์ในปฏิทิน</h3>
+                <button onclick="toggleLegendModal()" class="text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="space-y-3 text-xs text-slate-600">
+                <div class="flex items-center gap-3">
+                    <span class="px-2 py-1 bg-pea-100 text-pea-800 rounded font-bold">วันที่ปกติ</span>
+                    <span>วันลงรายงานปกติตามรอบ</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="px-2 py-1 bg-amber-100 text-amber-800 rounded font-bold">⚡ เลื่อนจากวันที่ X</span>
+                    <span>ตรงกับวันหยุด/เสาร์-อาทิตย์ เลื่อนขึ้นมาวันทำการก่อนหน้า</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Code -->
+    <script>
+        const DEFAULT_HOLIDAYS = {
+            "2026-01-01": "วันขึ้นปีใหม่",
+            "2026-03-03": "วันมาฆบูชา",
+            "2026-04-06": "วันจักรี",
+            "2026-04-13": "วันสงกรานต์",
+            "2026-04-14": "วันสงกรานต์",
+            "2026-04-15": "วันสงกรานต์",
+            "2026-05-01": "วันแรงงานแห่งชาติ",
+            "2026-05-04": "วันฉัตรมงคล",
+            "2026-05-31": "วันวิสาขบูชา",
+            "2026-06-03": "วันเฉลิมพระชนมพรรษา พระราชินี",
+            "2026-07-28": "วันเฉลิมพระชนมพรรษา ร.10",
+            "2026-07-29": "วันอาสาฬหบูชา",
+            "2026-08-12": "วันแม่แห่งชาติ",
+            "2026-10-13": "วันนวมินทรมหาราช",
+            "2026-10-23": "วันปิยมหาราช",
+            "2026-12-05": "วันพ่อแห่งชาติ",
+            "2026-12-10": "วันรัฐธรรมนูญ",
+            "2026-12-31": "วันสิ้นปี"
+        };
+
+        let reports = [];
+        let customHolidays = {};
+        let currentDate = new Date();
+        let lastAlarmTriggeredTime = 0;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                loadLocalStorage();
+                renderApp();
+                setupAlarmTimer();
+                checkNotificationPermission();
+            } catch (err) {
+                console.error("Initialization error:", err);
+            }
+        });
+
+        function loadLocalStorage() {
+            try {
+                const savedReports = localStorage.getItem('pea_reports_v3');
+                const savedHolidays = localStorage.getItem('pea_custom_holidays_v3');
+                reports = savedReports ? JSON.parse(savedReports) : [];
+                customHolidays = savedHolidays ? JSON.parse(savedHolidays) : { ...DEFAULT_HOLIDAYS };
+            } catch (e) {
+                reports = [];
+                customHolidays = { ...DEFAULT_HOLIDAYS };
+            }
+        }
+
+        function saveLocalStorage() {
+            localStorage.setItem('pea_reports_v3', JSON.stringify(reports));
+            localStorage.setItem('pea_custom_holidays_v3', JSON.stringify(customHolidays));
+        }
+
+        function clearAllData() {
+            if (confirm("ล้างข้อมูลทั้งหมดในเครื่องเพื่อเริ่มต้นใหม่ใช่หรือไม่?")) {
+                localStorage.clear();
+                reports = [];
+                customHolidays = { ...DEFAULT_HOLIDAYS };
+                saveLocalStorage();
+                renderApp();
+            }
+        }
+
+        function checkNotificationPermission() {
+            const btn = document.getElementById('btnPermission');
+            if (!("Notification" in window)) {
+                btn.style.display = 'none';
+                return;
+            }
+            if (Notification.permission === "granted") {
+                btn.innerHTML = `<i class="fa-solid fa-bell-slash text-emerald-400"></i> <span class="hidden md:inline">เปิดแจ้งเตือนแล้ว</span>`;
+                btn.classList.replace('bg-white/10', 'bg-emerald-800/40');
+            }
+        }
+
+        function requestNotificationPermission() {
+            if (!("Notification" in window)) {
+                alert("เบราว์เซอร์นี้ไม่รองรับการแจ้งเตือน");
+                return;
+            }
+            Notification.requestPermission().then(permission => {
+                if (permission === "granted") {
+                    alert("เปิดการแจ้งเตือนสำเร็จ!");
+                    checkNotificationPermission();
+                }
+            });
+        }
+
+        function isHolidayOrWeekend(dateObj) {
+            const dayOfWeek = dateObj.getDay();
+            if (dayOfWeek === 0 || dayOfWeek === 6) return true;
+
+            const yyyy = dateObj.getFullYear();
+            const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const dd = String(dateObj.getDate()).padStart(2, '0');
+            const dateStr = `${yyyy}-${mm}-${dd}`;
+
+            return !!customHolidays[dateStr];
+        }
+
+        function getAdjustedDueDate(year, month, targetDay) {
+            let testDate = new Date(year, month, targetDay);
+            if (testDate.getMonth() !== month) {
+                testDate = new Date(year, month + 1, 0);
+            }
+
+            let wasShifted = false;
+            let originalDay = testDate.getDate();
+
+            while (isHolidayOrWeekend(testDate)) {
+                wasShifted = true;
+                testDate.setDate(testDate.getDate() - 1);
+            }
+
+            return {
+                adjustedDate: testDate,
+                adjustedDay: testDate.getDate(),
+                adjustedMonth: testDate.getMonth(),
+                adjustedYear: testDate.getFullYear(),
+                wasShifted: wasShifted,
+                originalDay: originalDay
+            };
+        }
+
+        function changeMonth(delta) {
+            currentDate.setMonth(currentDate.getMonth() + delta);
+            renderApp();
+        }
+
+        function goToCurrentMonth() {
+            currentDate = new Date();
+            renderApp();
+        }
+
+        function switchView(view) {
+            const calBtn = document.getElementById('viewCalBtn');
+            const listBtn = document.getElementById('viewListBtn');
+            const calContainer = document.getElementById('calendarViewContainer');
+            const listContainer = document.getElementById('listViewContainer');
+
+            if (view === 'calendar') {
+                calBtn.className = "px-3 py-1.5 text-xs font-semibold rounded-lg transition flex items-center gap-1.5 bg-white text-pea-700 shadow-sm";
+                listBtn.className = "px-3 py-1.5 text-xs font-semibold text-slate-600 rounded-lg transition flex items-center gap-1.5 hover:text-slate-900";
+                calContainer.classList.remove('hidden');
+                listContainer.classList.add('hidden');
+            } else {
+                listBtn.className = "px-3 py-1.5 text-xs font-semibold rounded-lg transition flex items-center gap-1.5 bg-white text-pea-700 shadow-sm";
+                calBtn.className = "px-3 py-1.5 text-xs font-semibold text-slate-600 rounded-lg transition flex items-center gap-1.5 hover:text-slate-900";
+                listContainer.classList.remove('hidden');
+                calContainer.classList.add('hidden');
+            }
+        }
+
+        function renderApp() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+
+            const thaiMonths = [
+                "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
+                "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+            ];
+            document.getElementById('currentMonthYear').textContent = `${thaiMonths[month]} ${year + 543}`;
+
+            const monthTasksMap = computeMonthTasks(year, month);
+            const searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
+
+            renderCalendarGrid(year, month, monthTasksMap, searchQuery);
+            renderListView(monthTasksMap, searchQuery);
+            checkUrgentDueAlerts(monthTasksMap);
+        }
+
+        function computeMonthTasks(year, month) {
+            const taskMap = {};
+            reports.forEach(report => {
+                const targetDay = parseInt(report.day);
+                const shiftInfo = getAdjustedDueDate(year, month, targetDay);
+
+                if (shiftInfo.adjustedMonth === month) {
+                    const dayKey = shiftInfo.adjustedDay;
+                    if (!taskMap[dayKey]) taskMap[dayKey] = [];
+                    taskMap[dayKey].push({
+                        ...report,
+                        shiftInfo: shiftInfo
+                    });
+                }
+            });
+            return taskMap;
+        }
+
+        function renderCalendarGrid(year, month, monthTasksMap, searchQuery) {
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = '';
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const today = new Date();
+            const isCurrentMonth = today.getFullYear() === year && today.getMonth() === month;
+
+            for (let i = 0; i < firstDay; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = "bg-slate-50/50 min-h-[110px] p-1.5 text-slate-300 text-xs";
+                grid.appendChild(emptyCell);
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const cellDate = new Date(year, month, day);
+                const isToday = isCurrentMonth && today.getDate() === day;
+                const isWeekend = cellDate.getDay() === 0 || cellDate.getDay() === 6;
+                
+                const yyyy = year;
+                const mm = String(month + 1).padStart(2, '0');
+                const dd = String(day).padStart(2, '0');
+                const holidayName = customHolidays[`${yyyy}-${mm}-${dd}`];
+
+                let cellClass = "bg-white min-h-[110px] p-1.5 flex flex-col justify-between hover:bg-slate-50/80 transition relative cursor-pointer border border-slate-100 group";
+                if (isToday) cellClass += " bg-pea-50/70 ring-2 ring-pea-600 ring-inset";
+
+                const cell = document.createElement('div');
+                cell.className = cellClass;
+                
+                let dayNumberHtml = `<span class="w-6 h-6 flex items-center justify-center rounded-full text-xs font-bold ${
+                    isToday ? 'bg-pea-700 text-white shadow-sm' : isWeekend ? 'text-rose-500' : 'text-slate-700'
+                }">${day}</span>`;
+
+                if (holidayName) {
+                    dayNumberHtml += `<span class="text-[9px] bg-rose-100 text-rose-700 px-1.5 py-0.5 rounded font-medium truncate max-w-[80px]" title="${holidayName}">${holidayName}</span>`;
+                }
+
+                let dayTasks = monthTasksMap[day] || [];
+                if (searchQuery) {
+                    dayTasks = dayTasks.filter(t => 
+                        t.title.toLowerCase().includes(searchQuery) || 
+                        (t.owner && t.owner.toLowerCase().includes(searchQuery))
+                    );
+                }
+
+                let tasksHtml = '';
+                if (dayTasks.length > 0) {
+                    tasksHtml = `<div class="space-y-1 mt-1 overflow-y-auto max-h-[75px] custom-scrollbar">`;
+                    dayTasks.forEach(task => {
+                        const isShifted = task.shiftInfo.wasShifted;
+                        tasksHtml += `
+                            <div class="p-1 rounded text-[10px] ${
+                                isShifted ? 'bg-amber-100 text-amber-900 border border-amber-300' : 'bg-pea-100 text-pea-900'
+                            } flex flex-col">
+                                <div class="font-bold truncate flex items-center justify-between">
+                                    <span class="truncate">${escapeHtml(task.title)}</span>
+                                    <a href="${task.url}" target="_blank" onclick="event.stopPropagation()" class="text-pea-700 hover:text-pea-900 ml-1">
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </a>
+                                </div>
+                                ${isShifted ? `<span class="text-[9px] text-amber-700 font-semibold"><i class="fa-solid fa-bolt"></i> เลื่อนจากวันที่ ${task.shiftInfo.originalDay}</span>` : ''}
+                            </div>
+                        `;
+                    });
+                    tasksHtml += `</div>`;
+                }
+
+                cell.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between">
+                            ${dayNumberHtml}
+                            ${dayTasks.length > 0 ? `<span class="text-[10px] bg-pea-200 text-pea-800 font-bold px-1.5 py-0.2 rounded-full">${dayTasks.length}</span>` : ''}
+                        </div>
+                        ${tasksHtml}
+                    </div>
+                    <div class="opacity-0 group-hover:opacity-100 text-[10px] text-slate-400 text-right transition">
+                        + ดูรายละเอียด
+                    </div>
+                `;
+
+                cell.addEventListener('click', (e) => {
+                    if (e.target.closest('a')) return;
+                    openDayDetailModal(day, monthTasksMap[day] || []);
+                });
+
+                grid.appendChild(cell);
+            }
+        }
+
+        function renderListView(monthTasksMap, searchQuery) {
+            const tbody = document.getElementById('listTableBody');
+            tbody.innerHTML = '';
+
+            let allTasks = [];
+            Object.keys(monthTasksMap).forEach(day => {
+                allTasks.push(...monthTasksMap[day]);
+            });
+
+            if (searchQuery) {
+                allTasks = allTasks.filter(t => 
+                    t.title.toLowerCase().includes(searchQuery) || 
+                    (t.owner && t.owner.toLowerCase().includes(searchQuery))
+                );
+            }
+
+            allTasks.sort((a, b) => a.shiftInfo.adjustedDay - b.shiftInfo.adjustedDay);
+            document.getElementById('totalTaskCountBadge').textContent = `${allTasks.length} รายการ`;
+
+            if (allTasks.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="py-8 text-center text-slate-400 text-xs">
+                            <i class="fa-solid fa-folder-open text-2xl mb-2 block"></i>
+                            ไม่พบรายการรายงานประจำเดือน
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            allTasks.forEach(task => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition";
+                const isShifted = task.shiftInfo.wasShifted;
+
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-bold text-slate-600">
+                        วันที่ ${task.day} ของทุกเดือน
+                    </td>
+                    <td class="py-3 px-4">
+                        <span class="font-bold text-pea-800">วันที่ ${task.shiftInfo.adjustedDay}</span>
+                        ${isShifted ? `
+                            <span class="ml-1 text-[10px] px-2 py-0.5 bg-amber-100 text-amber-800 rounded-full font-medium border border-amber-200">
+                                <i class="fa-solid fa-bolt"></i> เลื่อนจากวันที่ ${task.shiftInfo.originalDay}
+                            </span>
+                        ` : ''}
+                    </td>
+                    <td class="py-3 px-4 font-semibold text-slate-800">
+                        ${escapeHtml(task.title)}
+                    </td>
+                    <td class="py-3 px-4">
+                        <a href="${task.url}" target="_blank" class="inline-flex items-center gap-1 text-pea-700 hover:text-pea-900 font-medium underline">
+                            <i class="fa-solid fa-link text-[10px]"></i> เปิดลิงก์
+                        </a>
+                    </td>
+                    <td class="py-3 px-4 text-slate-500">
+                        ${escapeHtml(task.owner || '-')}
+                    </td>
+                    <td class="py-3 px-4 text-center">
+                        <div class="flex items-center justify-center gap-2">
+                            <button onclick="openEditModal('${task.id}')" class="p-1.5 text-slate-400 hover:text-pea-700 rounded">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="deleteReport('${task.id}')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function checkUrgentDueAlerts(monthTasksMap) {
+            const today = new Date();
+            if (today.getFullYear() !== currentDate.getFullYear() || today.getMonth() !== currentDate.getMonth()) {
+                document.getElementById('urgentAlertBox').classList.add('hidden');
+                return;
+            }
+
+            const todayDay = today.getDate();
+            const dueToday = monthTasksMap[todayDay] || [];
+            const alertBox = document.getElementById('urgentAlertBox');
+            const alertText = document.getElementById('urgentAlertText');
+
+            if (dueToday.length > 0) {
+                alertBox.classList.remove('hidden');
+                alertText.textContent = `วันนี้มี ${dueToday.length} รายการที่ต้องส่งรายงาน`;
+            } else {
+                alertBox.classList.add('hidden');
+            }
+        }
+
+        function openAddModal(day = null) {
+            document.getElementById('reportId').value = '';
+            document.getElementById('reportForm').reset();
+            if (day) document.getElementById('reportDay').value = day;
+            document.getElementById('modalTitle').innerHTML = `<i class="fa-solid fa-circle-plus"></i> เพิ่มรายการลิงก์รายงาน`;
+            document.getElementById('reportModal').classList.remove('hidden');
+        }
+
+        function closeAddModal() {
+            document.getElementById('reportModal').classList.add('hidden');
+        }
+
+        function openEditModal(id) {
+            const report = reports.find(r => r.id === id);
+            if (!report) return;
+
+            document.getElementById('reportId').value = report.id;
+            document.getElementById('reportDay').value = report.day;
+            document.getElementById('reportTitle').value = report.title;
+            document.getElementById('reportUrl').value = report.url;
+            document.getElementById('reportOwner').value = report.owner || '';
+
+            document.getElementById('modalTitle').innerHTML = `<i class="fa-solid fa-pen-to-square"></i> แก้ไขรายการลิงก์รายงาน`;
+            document.getElementById('reportModal').classList.remove('hidden');
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const id = document.getElementById('reportId').value;
+            const day = document.getElementById('reportDay').value;
+            const title = document.getElementById('reportTitle').value.trim();
+            const url = document.getElementById('reportUrl').value.trim();
+            const owner = document.getElementById('reportOwner').value.trim();
+
+            if (id) {
+                const index = reports.findIndex(r => r.id === id);
+                if (index !== -1) {
+                    reports[index] = { id, day, title, url, owner };
+                }
+            } else {
+                reports.push({
+                    id: 'rep_' + Date.now(),
+                    day,
+                    title,
+                    url,
+                    owner
+                });
+            }
+
+            saveLocalStorage();
+            closeAddModal();
+            renderApp();
+        }
+
+        function deleteReport(id) {
+            if (confirm("คุณแน่ใจหรือไม่ว่าต้องการลบรายการนี้?")) {
+                reports = reports.filter(r => r.id !== id);
+                saveLocalStorage();
+                renderApp();
+                closeDayDetailModal();
+            }
+        }
+
+        function openDayDetailModal(day, dayTasks) {
+            const modal = document.getElementById('dayDetailModal');
+            document.getElementById('dayDetailTitle').textContent = `รายการรายงานวันที่ ${day}`;
+            document.getElementById('dayDetailSub').textContent = `ประจำเดือน ${document.getElementById('currentMonthYear').textContent}`;
+            
+            const listContainer = document.getElementById('dayDetailList');
+            listContainer.innerHTML = '';
+
+            if (dayTasks.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="text-center py-6 text-slate-400 text-xs">
+                        <i class="fa-solid fa-calendar-xmark text-xl mb-1 block"></i>
+                        ไม่มีรายงานที่ต้องส่งในวันนี้
+                    </div>
+                `;
+            } else {
+                dayTasks.forEach(task => {
+                    const item = document.createElement('div');
+                    const isShifted = task.shiftInfo.wasShifted;
+                    item.className = "p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between gap-3";
+                    item.innerHTML = `
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-xs text-slate-800">${escapeHtml(task.title)}</h4>
+                            <div class="flex items-center gap-2 text-[10px] text-slate-500">
+                                <span><i class="fa-solid fa-user"></i> ${escapeHtml(task.owner || 'ไม่ระบุ')}</span>
+                                ${isShifted ? `<span class="text-amber-700 font-semibold"><i class="fa-solid fa-bolt"></i> เลื่อนจากวันที่ ${task.shiftInfo.originalDay}</span>` : ''}
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <a href="${task.url}" target="_blank" class="px-3 py-1.5 bg-pea-700 hover:bg-pea-800 text-white rounded-lg text-xs font-semibold transition flex items-center gap-1 shadow-sm">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> เปิดลิงก์
+                            </a>
+                            <button onclick="openEditModal('${task.id}')" class="p-1.5 text-slate-400 hover:text-pea-700">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="deleteReport('${task.id}')" class="p-1.5 text-slate-400 hover:text-rose-600">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    `;
+                    listContainer.appendChild(item);
+                });
+            }
+
+            document.getElementById('addSpecificDayBtn').onclick = () => {
+                closeDayDetailModal();
+                openAddModal(day);
+            };
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeDayDetailModal() {
+            document.getElementById('dayDetailModal').classList.add('hidden');
+        }
+
+        function openHolidayModal() {
+            renderHolidayList();
+            document.getElementById('holidayModal').classList.remove('hidden');
+        }
+
+        function closeHolidayModal() {
+            document.getElementById('holidayModal').classList.add('hidden');
+        }
+
+        function renderHolidayList() {
+            const list = document.getElementById('holidayList');
+            list.innerHTML = '';
+            const sortedDates = Object.keys(customHolidays).sort();
+
+            sortedDates.forEach(dateStr => {
+                const item = document.createElement('div');
+                item.className = "flex items-center justify-between p-2 bg-slate-50 rounded-lg border border-slate-100";
+                item.innerHTML = `
+                    <div>
+                        <span class="font-bold text-slate-700 mr-2">${dateStr}</span>
+                        <span class="text-slate-600">${escapeHtml(customHolidays[dateStr])}</span>
+                    </div>
+                    <button onclick="deleteHoliday('${dateStr}')" class="text-slate-400 hover:text-rose-600 text-xs">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function handleAddHoliday(e) {
+            e.preventDefault();
+            const dateStr = document.getElementById('holidayDateInput').value;
+            const nameStr = document.getElementById('holidayNameInput').value.trim();
+
+            if (dateStr && nameStr) {
+                customHolidays[dateStr] = nameStr;
+                saveLocalStorage();
+                renderHolidayList();
+                renderApp();
+                document.getElementById('holidayDateInput').value = '';
+                document.getElementById('holidayNameInput').value = '';
+            }
+        }
+
+        function deleteHoliday(dateStr) {
+            delete customHolidays[dateStr];
+            saveLocalStorage();
+            renderHolidayList();
+            renderApp();
+        }
+
+        function openDueListModal() {
+            const today = new Date();
+            const monthTasks = computeMonthTasks(today.getFullYear(), today.getMonth());
+            openDayDetailModal(today.getDate(), monthTasks[today.getDate()] || []);
+        }
+
+        function toggleLegendModal() {
+            document.getElementById('legendModal').classList.toggle('hidden');
+        }
+
+        function setupAlarmTimer() {
+            setInterval(checkAndTriggerAlarm, 30000);
+            checkAndTriggerAlarm();
+        }
+
+        function checkAndTriggerAlarm() {
+            const now = new Date();
+            const monthTasksMap = computeMonthTasks(now.getFullYear(), now.getMonth());
+            const todayTasks = monthTasksMap[now.getDate()] || [];
+
+            if (todayTasks.length === 0) return;
+
+            const fiveMinutes = 5 * 60 * 1000;
+            if (Date.now() - lastAlarmTriggeredTime >= fiveMinutes) {
+                triggerAlarmPopup(todayTasks);
+            }
+        }
+
+        function triggerAlarmPopup(todayTasks) {
+            lastAlarmTriggeredTime = Date.now();
+            const popupList = document.getElementById('alarmPopupList');
+            popupList.innerHTML = '';
+
+            todayTasks.forEach(task => {
+                const item = document.createElement('div');
+                item.className = "p-3 bg-amber-50 rounded-xl border border-amber-200 flex items-center justify-between";
+                item.innerHTML = `
+                    <div class="pr-2">
+                        <div class="font-bold text-xs text-slate-800">${escapeHtml(task.title)}</div>
+                        <div class="text-[10px] text-slate-500">ผู้รับผิดชอบ: ${escapeHtml(task.owner || 'ไม่ระบุ')}</div>
+                    </div>
+                    <a href="${task.url}" target="_blank" onclick="dismissAlarm()" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-xs font-bold transition flex items-center gap-1 shadow-sm whitespace-nowrap">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> เข้าลงรายงาน
+                    </a>
+                `;
+                popupList.appendChild(item);
+            });
+
+            document.getElementById('alarmPopupModal').classList.remove('hidden');
+
+            if ("Notification" in window && Notification.permission === "granted") {
+                new Notification("⚡ เตือนส่งรายงานประจำเดือน กฟส.ตะโหมด", {
+                    body: `วันนี้มี ${todayTasks.length} รายการที่ถึงกำหนดส่งรายงานแล้ว`,
+                    icon: "https://cdn-icons-png.flaticon.com/512/3652/3652191.png"
+                });
+            }
+        }
+
+        function snoozeAlarm() {
+            lastAlarmTriggeredTime = Date.now();
+            document.getElementById('alarmPopupModal').classList.add('hidden');
+        }
+
+        function dismissAlarm() {
+            lastAlarmTriggeredTime = Date.now() + (24 * 60 * 60 * 1000);
+            document.getElementById('alarmPopupModal').classList.add('hidden');
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, "&amp;")
+                      .replace(/</g, "&lt;")
+                      .replace(/>/g, "&gt;")
+                      .replace(/"/g, "&quot;")
+                      .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
