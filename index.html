@@ -74,7 +74,7 @@
                             ระบบปฏิทินรวมลิงก์รายงานประจำเดือน กฟส.ตะโหมด
                         </h1>
                         <p class="text-xs text-pea-200 font-light flex items-center gap-1">
-                            <i class="fa-solid fa-building-user text-pea-gold"></i> ระบบจัดเก็บลิงก์รายงาน & แจ้งเตือนเลื่อนวันหยุดอัตโนมัติ
+                            <i class="fa-solid fa-building-user text-pea-gold"></i> ระบบจัดเก็บลิงก์รายงาน & คลังลิงก์สำรองภายนอก
                         </p>
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                     </button>
                     <button onclick="openAddModal()" class="px-4 py-2.5 bg-amber-400 hover:bg-amber-300 text-pea-900 rounded-xl text-xs sm:text-sm font-semibold transition shadow-md hover:shadow-lg flex items-center gap-2 transform active:scale-95">
                         <i class="fa-solid fa-plus-circle text-base"></i>
-                        <span>เพิ่มรายการรายงาน</span>
+                        <span>เพิ่มรายงานประจำเดือน</span>
                     </button>
                 </div>
             </div>
@@ -99,10 +99,10 @@
     </header>
 
     <!-- Main Container -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full space-y-6">
 
         <!-- Top Alert / Due Summary Banner -->
-        <div id="urgentAlertBox" class="hidden mb-6 bg-gradient-to-r from-amber-500 to-rose-600 text-white p-4 rounded-2xl shadow-md flex items-center justify-between">
+        <div id="urgentAlertBox" class="hidden bg-gradient-to-r from-amber-500 to-rose-600 text-white p-4 rounded-2xl shadow-md flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="p-2.5 bg-white/20 rounded-xl">
                     <i class="fa-solid fa-triangle-exclamation text-xl text-amber-100"></i>
@@ -118,7 +118,7 @@
         </div>
 
         <!-- Controls & Navigation Bar -->
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <!-- Calendar Month Selector -->
             <div class="flex items-center space-x-3 justify-between md:justify-start">
                 <div class="flex items-center space-x-1 bg-slate-100 p-1 rounded-xl">
@@ -208,18 +208,38 @@
             </div>
         </div>
 
+        <!-- EXTRA LINKS REPOSITORY SECTION -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden p-5">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4 pb-3 border-b border-slate-100">
+                <div>
+                    <h3 class="font-bold text-slate-800 text-sm sm:text-base flex items-center gap-2">
+                        <i class="fa-solid fa-folder-open text-pea-700"></i> คลังลิงก์และเอกสารสำคัญอื่นๆ (นอกเหนือจากปฏิทิน)
+                    </h3>
+                    <p class="text-xs text-slate-500">รวบรวมลิงก์ระบบงาน, คู่มือ หรือเอกสารที่ต้องใช้งานประจำแต่ไม่ได้ผูกกับปฏิทินรายเดือน</p>
+                </div>
+                <button onclick="openExtraLinkModal()" class="px-3.5 py-2 bg-pea-700 hover:bg-pea-800 text-white rounded-xl text-xs font-semibold transition shadow-sm flex items-center gap-1.5 whitespace-nowrap">
+                    <i class="fa-solid fa-plus"></i> เพิ่มลิงก์ภายนอกใหม่
+                </button>
+            </div>
+
+            <!-- Extra Links Grid -->
+            <div id="extraLinksGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                <!-- Dynamic Extra Link Cards -->
+            </div>
+        </div>
+
     </main>
 
-    <!-- Footer -->
+    <!-- Footer (Disabled Clear Button) -->
     <footer class="bg-white border-t border-slate-200 py-4 mt-auto">
         <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2">
             <div>
                 <span class="font-semibold text-pea-800">กฟส.ตะโหมด</span> — ระบบบริหารจัดการลิงก์รายงานประจำเดือน
             </div>
-            <div class="flex items-center gap-3">
-                <button onclick="clearAllData()" class="text-slate-400 hover:text-rose-600 underline text-xs">
-                    ล้างข้อมูลค้างในระบบทั้งหมด
-                </button>
+            <div>
+                <span class="text-slate-400 cursor-not-allowed opacity-60 flex items-center gap-1 justify-center sm:justify-end" title="ปุ่มนี้ถูกปิดการใช้งานเพื่อป้องกันการเผลอลบข้อมูลส่วนกลาง">
+                    <i class="fa-solid fa-lock text-[10px]"></i> ปุ่มล้างข้อมูลถูกปิดการใช้งานเพื่อความปลอดภัย
+                </span>
             </div>
         </div>
     </footer>
@@ -251,7 +271,7 @@
         </div>
     </div>
 
-    <!-- MODAL: Add / Edit Report Link -->
+    <!-- MODAL: Add / Edit Report Link (Calendar) -->
     <div id="reportModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-100">
             <div class="bg-gradient-to-r from-pea-800 to-pea-700 px-6 py-4 text-white flex justify-between items-center">
@@ -297,6 +317,47 @@
                     </button>
                     <button type="submit" class="px-5 py-2 bg-pea-700 hover:bg-pea-800 text-white rounded-xl text-xs font-semibold shadow-md transition">
                         บันทึกรายการ
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Add / Edit Extra Link (คลังลิงก์ภายนอก) -->
+    <div id="extraLinkModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-100">
+            <div class="bg-gradient-to-r from-pea-800 to-pea-700 px-6 py-4 text-white flex justify-between items-center">
+                <h3 id="extraModalTitle" class="font-bold text-base flex items-center gap-2">
+                    <i class="fa-solid fa-link"></i> เพิ่มลิงก์ภายนอก / คลังเอกสาร
+                </h3>
+                <button onclick="closeExtraLinkModal()" class="text-white/80 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <form id="extraLinkForm" onsubmit="handleExtraFormSubmit(event)" class="p-6 space-y-4">
+                <input type="hidden" id="extraLinkId">
+                
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">ชื่อลิงก์ / หัวข้อเอกสาร <span class="text-rose-500">*</span></label>
+                    <input type="text" id="extraTitle" required class="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-pea-600 focus:outline-none" placeholder="เช่น คู่มือระบบแจ้งซ่อม, ลิงก์ระบบภายใน">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">URL เว็บไซต์ / ลิงก์ <span class="text-rose-500">*</span></label>
+                    <input type="url" id="extraUrl" required class="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-pea-600 focus:outline-none" placeholder="https://...">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">หมวดหมู่ / คำอธิบายสั้นๆ</label>
+                    <input type="text" id="extraCategory" class="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-pea-600 focus:outline-none" placeholder="เช่น คู่มือ, ระบบงาน, ฟอร์มกลาง">
+                </div>
+
+                <div class="pt-2 flex justify-end gap-2">
+                    <button type="button" onclick="closeExtraLinkModal()" class="px-4 py-2 border border-slate-300 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition">
+                        ยกเลิก
+                    </button>
+                    <button type="submit" class="px-5 py-2 bg-pea-700 hover:bg-pea-800 text-white rounded-xl text-xs font-semibold shadow-md transition">
+                        บันทึกข้อมูล
                     </button>
                 </div>
             </form>
@@ -409,6 +470,7 @@
         };
 
         let reports = [];
+        let extraLinks = [];
         let customHolidays = {};
         let currentDate = new Date();
         let lastAlarmTriggeredTime = 0;
@@ -417,6 +479,7 @@
             try {
                 loadLocalStorage();
                 renderApp();
+                renderExtraLinks();
                 setupAlarmTimer();
                 checkNotificationPermission();
             } catch (err) {
@@ -426,29 +489,23 @@
 
         function loadLocalStorage() {
             try {
-                const savedReports = localStorage.getItem('pea_reports_v3');
-                const savedHolidays = localStorage.getItem('pea_custom_holidays_v3');
+                const savedReports = localStorage.getItem('pea_reports_v4');
+                const savedExtraLinks = localStorage.getItem('pea_extralinks_v4');
+                const savedHolidays = localStorage.getItem('pea_custom_holidays_v4');
                 reports = savedReports ? JSON.parse(savedReports) : [];
+                extraLinks = savedExtraLinks ? JSON.parse(savedExtraLinks) : [];
                 customHolidays = savedHolidays ? JSON.parse(savedHolidays) : { ...DEFAULT_HOLIDAYS };
             } catch (e) {
                 reports = [];
+                extraLinks = [];
                 customHolidays = { ...DEFAULT_HOLIDAYS };
             }
         }
 
         function saveLocalStorage() {
-            localStorage.setItem('pea_reports_v3', JSON.stringify(reports));
-            localStorage.setItem('pea_custom_holidays_v3', JSON.stringify(customHolidays));
-        }
-
-        function clearAllData() {
-            if (confirm("ล้างข้อมูลทั้งหมดในเครื่องเพื่อเริ่มต้นใหม่ใช่หรือไม่?")) {
-                localStorage.clear();
-                reports = [];
-                customHolidays = { ...DEFAULT_HOLIDAYS };
-                saveLocalStorage();
-                renderApp();
-            }
+            localStorage.setItem('pea_reports_v4', JSON.stringify(reports));
+            localStorage.setItem('pea_extralinks_v4', JSON.stringify(extraLinks));
+            localStorage.setItem('pea_custom_holidays_v4', JSON.stringify(customHolidays));
         }
 
         function checkNotificationPermission() {
@@ -557,6 +614,7 @@
             renderCalendarGrid(year, month, monthTasksMap, searchQuery);
             renderListView(monthTasksMap, searchQuery);
             checkUrgentDueAlerts(monthTasksMap);
+            renderExtraLinks(searchQuery);
         }
 
         function computeMonthTasks(year, month) {
@@ -742,6 +800,53 @@
             });
         }
 
+        function renderExtraLinks(searchQuery = '') {
+            const grid = document.getElementById('extraLinksGrid');
+            grid.innerHTML = '';
+
+            let filteredLinks = extraLinks;
+            if (searchQuery) {
+                filteredLinks = extraLinks.filter(l => 
+                    l.title.toLowerCase().includes(searchQuery) || 
+                    (l.category && l.category.toLowerCase().includes(searchQuery))
+                );
+            }
+
+            if (filteredLinks.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-6 text-slate-400 text-xs">
+                        <i class="fa-solid fa-link-slash text-xl mb-1 block"></i>
+                        ยังไม่มีรายการลิงก์ภายนอก
+                    </div>
+                `;
+                return;
+            }
+
+            filteredLinks.forEach(link => {
+                const card = document.createElement('div');
+                card.className = "p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl border border-slate-200 transition flex flex-col justify-between gap-2";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-start justify-between gap-2">
+                            <h4 class="font-bold text-slate-800 text-xs line-clamp-1">${escapeHtml(link.title)}</h4>
+                            ${link.category ? `<span class="text-[10px] bg-pea-100 text-pea-800 px-2 py-0.5 rounded-full font-medium whitespace-nowrap">${escapeHtml(link.category)}</span>` : ''}
+                        </div>
+                        <p class="text-[11px] text-slate-400 truncate mt-1">${escapeHtml(link.url)}</p>
+                    </div>
+                    <div class="flex items-center justify-between pt-2 border-t border-slate-200/60 text-xs">
+                        <a href="${link.url}" target="_blank" class="inline-flex items-center gap-1 font-semibold text-pea-700 hover:text-pea-900">
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> เปิดใช้งานลิงก์
+                        </a>
+                        <div class="flex items-center gap-1">
+                            <button onclick="openEditExtraLinkModal('${link.id}')" class="p-1 text-slate-400 hover:text-pea-700"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="deleteExtraLink('${link.id}')" class="p-1 text-slate-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
         function checkUrgentDueAlerts(monthTasksMap) {
             const today = new Date();
             if (today.getFullYear() !== currentDate.getFullYear() || today.getMonth() !== currentDate.getMonth()) {
@@ -822,6 +927,64 @@
                 saveLocalStorage();
                 renderApp();
                 closeDayDetailModal();
+            }
+        }
+
+        function openExtraLinkModal() {
+            document.getElementById('extraLinkId').value = '';
+            document.getElementById('extraLinkForm').reset();
+            document.getElementById('extraModalTitle').innerHTML = `<i class="fa-solid fa-link"></i> เพิ่มลิงก์ภายนอก / คลังเอกสาร`;
+            document.getElementById('extraLinkModal').classList.remove('hidden');
+        }
+
+        function closeExtraLinkModal() {
+            document.getElementById('extraLinkModal').classList.add('hidden');
+        }
+
+        function openEditExtraLinkModal(id) {
+            const link = extraLinks.find(l => l.id === id);
+            if (!link) return;
+
+            document.getElementById('extraLinkId').value = link.id;
+            document.getElementById('extraTitle').value = link.title;
+            document.getElementById('extraUrl').value = link.url;
+            document.getElementById('extraCategory').value = link.category || '';
+
+            document.getElementById('extraModalTitle').innerHTML = `<i class="fa-solid fa-pen"></i> แก้ไขลิงก์ภายนอก`;
+            document.getElementById('extraLinkModal').classList.remove('hidden');
+        }
+
+        function handleExtraFormSubmit(e) {
+            e.preventDefault();
+            const id = document.getElementById('extraLinkId').value;
+            const title = document.getElementById('extraTitle').value.trim();
+            const url = document.getElementById('extraUrl').value.trim();
+            const category = document.getElementById('extraCategory').value.trim();
+
+            if (id) {
+                const index = extraLinks.findIndex(l => l.id === id);
+                if (index !== -1) {
+                    extraLinks[index] = { id, title, url, category };
+                }
+            } else {
+                extraLinks.push({
+                    id: 'ext_' + Date.now(),
+                    title,
+                    url,
+                    category
+                });
+            }
+
+            saveLocalStorage();
+            closeExtraLinkModal();
+            renderExtraLinks();
+        }
+
+        function deleteExtraLink(id) {
+            if (confirm("คุณแน่ใจหรือไม่ว่าต้องการลบลิงก์นี้ออกจากคลัง?")) {
+                extraLinks = extraLinks.filter(l => l.id !== id);
+                saveLocalStorage();
+                renderExtraLinks();
             }
         }
 
